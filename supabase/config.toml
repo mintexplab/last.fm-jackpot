@@ -1,1 +1,4 @@
 project_id = "ouyyvtpgbwxkbakbomfb"
+
+[functions.lastfm-auth]
+verify_jwt = false
