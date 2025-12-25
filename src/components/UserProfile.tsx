@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Calendar, Headphones, MapPin, ExternalLink, LogOut } from 'lucide-react';
+import { Calendar, MapPin, ExternalLink, LogOut } from 'lucide-react';
 import { useLastFm } from '@/contexts/LastFmContext';
 import { getImage } from '@/lib/lastfm';
 import { Button } from '@/components/ui/button';
@@ -13,8 +13,7 @@ export const UserProfile = () => {
   const registeredDate = new Date(parseInt(user.registered.unixtime) * 1000);
   const formattedDate = registeredDate.toLocaleDateString('en-US', {
     year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+    month: 'short',
   });
 
   const playcount = parseInt(user.playcount).toLocaleString();
@@ -22,90 +21,73 @@ export const UserProfile = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="glass-card p-6 md:p-8"
+      className="border-b border-border/30 pb-8 mb-8"
     >
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+      <div className="flex flex-col md:flex-row items-start gap-6">
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="relative"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border border-border/50"
         >
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg"
-               style={{ boxShadow: '0 0 30px hsla(45, 90%, 55%, 0.2)' }}>
-            {avatar ? (
-              <img src={avatar} alt={user.name} className="w-full h-full object-cover" />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                <span className="text-4xl font-display font-bold text-primary-foreground">
-                  {user.name.charAt(0).toUpperCase()}
-                </span>
-              </div>
-            )}
-          </div>
-          <div className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center shadow-lg">
-            <Headphones className="w-4 h-4 text-secondary-foreground" />
-          </div>
+          {avatar ? (
+            <img src={avatar} alt={user.name} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full bg-muted flex items-center justify-center">
+              <span className="text-2xl font-display font-medium text-foreground">
+                {user.name.charAt(0).toUpperCase()}
+              </span>
+            </div>
+          )}
         </motion.div>
 
-        <div className="flex-1 text-center md:text-left space-y-4">
+        <div className="flex-1 space-y-3">
           <div>
-            <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground">
+            <h2 className="font-display text-2xl md:text-3xl font-medium text-foreground">
               {user.realname || user.name}
-            </h1>
+            </h2>
             {user.realname && (
-              <p className="text-muted-foreground">@{user.name}</p>
+              <p className="text-muted-foreground text-sm font-light">@{user.name}</p>
             )}
           </div>
 
-          <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground font-light">
             {user.country && (
-              <span className="flex items-center gap-1">
-                <MapPin className="w-4 h-4 text-primary" />
+              <span className="flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5" />
                 {user.country}
               </span>
             )}
-            <span className="flex items-center gap-1">
-              <Calendar className="w-4 h-4 text-secondary" />
-              Since {formattedDate}
+            <span className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" />
+              {formattedDate}
             </span>
+            <span className="text-primary font-medium">{playcount} scrobbles</span>
           </div>
 
-          <div className="flex flex-wrap justify-center md:justify-start gap-4">
+          <div className="flex items-center gap-4 pt-2">
             <a
               href={user.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-primary hover:text-primary/80 flex items-center gap-1 transition-colors"
+              className="text-xs text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors font-light"
             >
-              View on Last.fm <ExternalLink className="w-3 h-3" />
+              Last.fm <ExternalLink className="w-3 h-3" />
             </a>
             <Button
               variant="ghost"
               size="sm"
               onClick={logout}
-              className="text-muted-foreground hover:text-destructive"
+              className="text-xs text-muted-foreground hover:text-primary h-auto p-0 font-light"
             >
-              <LogOut className="w-4 h-4 mr-1" />
+              <LogOut className="w-3 h-3 mr-1" />
               Logout
             </Button>
           </div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
-          className="text-center md:text-right"
-        >
-          <p className="text-muted-foreground text-sm mb-1">Total Scrobbles</p>
-          <p className="font-display text-4xl md:text-5xl font-bold gradient-text stat-glow">
-            {playcount}
-          </p>
-        </motion.div>
       </div>
     </motion.div>
   );

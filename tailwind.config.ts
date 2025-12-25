@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Syne', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        display: ['Neue Haas Grotesk Display Pro', 'Helvetica Neue', 'sans-serif'],
+        body: ['Neue Haas Grotesk Display Pro', 'Helvetica Neue', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -23,17 +23,17 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        gold: {
-          50: "hsl(45, 90%, 95%)",
-          100: "hsl(45, 90%, 85%)",
-          200: "hsl(45, 90%, 75%)",
-          300: "hsl(45, 90%, 65%)",
-          400: "hsl(45, 90%, 55%)",
-          500: "hsl(45, 85%, 50%)",
-          600: "hsl(40, 80%, 45%)",
-          700: "hsl(35, 75%, 40%)",
-          800: "hsl(30, 70%, 35%)",
-          900: "hsl(25, 65%, 25%)",
+        red: {
+          50: "hsl(350, 100%, 95%)",
+          100: "hsl(350, 100%, 85%)",
+          200: "hsl(350, 100%, 75%)",
+          300: "hsl(350, 100%, 65%)",
+          400: "hsl(350, 100%, 60%)",
+          500: "hsl(350, 100%, 55%)",
+          600: "hsl(350, 100%, 50%)",
+          700: "hsl(350, 100%, 45%)",
+          800: "hsl(350, 100%, 40%)",
+          900: "hsl(350, 100%, 30%)",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",

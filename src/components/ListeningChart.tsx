@@ -1,66 +1,41 @@
 import { motion } from 'framer-motion';
-import { BarChart3 } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, ResponsiveContainer, Cell } from 'recharts';
 import { useLastFm } from '@/contexts/LastFmContext';
 
 export const ListeningChart = () => {
   const { data } = useLastFm();
   
   const chartData = data.topArtists.slice(0, 8).map((artist) => ({
-    name: artist.name.length > 10 ? artist.name.slice(0, 10) + '...' : artist.name,
+    name: artist.name.length > 8 ? artist.name.slice(0, 8) + '…' : artist.name,
     plays: parseInt(artist.playcount),
   }));
 
   if (chartData.length === 0) return null;
 
-  const colors = [
-    'hsl(45, 90%, 55%)',
-    'hsl(35, 85%, 45%)',
-    'hsl(25, 80%, 50%)',
-    'hsl(40, 85%, 50%)',
-    'hsl(30, 80%, 45%)',
-    'hsl(50, 85%, 55%)',
-    'hsl(20, 75%, 50%)',
-    'hsl(55, 90%, 50%)',
-  ];
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.45 }}
-      className="glass-card p-6 md:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.25 }}
+      className="border border-border/30 p-6"
     >
-      <div className="flex items-center gap-2 mb-6">
-        <BarChart3 className="w-5 h-5 text-primary" />
-        <h2 className="font-display text-2xl font-bold text-foreground">Artist Plays</h2>
-      </div>
+      <h2 className="font-display text-lg font-medium text-foreground mb-6">Artist Distribution</h2>
 
-      <div className="h-64">
+      <div className="h-48">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} layout="vertical" margin={{ left: 20, right: 20 }}>
-            <XAxis type="number" hide />
-            <YAxis
-              type="category"
+          <BarChart data={chartData} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
+            <XAxis
               dataKey="name"
-              tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+              tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
               axisLine={false}
               tickLine={false}
-              width={80}
             />
-            <Tooltip
-              contentStyle={{
-                background: 'hsl(var(--card))',
-                border: '1px solid hsl(var(--border))',
-                borderRadius: '8px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-              }}
-              labelStyle={{ color: 'hsl(var(--foreground))' }}
-              formatter={(value: number) => [`${value.toLocaleString()} plays`, 'Plays']}
-            />
-            <Bar dataKey="plays" radius={[0, 8, 8, 0]}>
+            <Bar dataKey="plays" radius={[2, 2, 0, 0]}>
               {chartData.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={index === 0 ? 'hsl(350, 100%, 60%)' : 'hsl(0, 0%, 25%)'} 
+                />
               ))}
             </Bar>
           </BarChart>

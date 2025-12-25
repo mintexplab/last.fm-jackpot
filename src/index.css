@@ -1,5 +1,4 @@
 @import url('https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro');
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,60 +6,60 @@
 
 @layer base {
   :root {
-    --background: 30 10% 4%;
-    --foreground: 40 30% 96%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 30 10% 8%;
-    --card-foreground: 40 30% 96%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 30 10% 8%;
-    --popover-foreground: 40 30% 96%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 45 90% 55%;
-    --primary-foreground: 30 20% 8%;
+    --primary: 350 100% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 35 85% 45%;
-    --secondary-foreground: 40 30% 96%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 30 10% 15%;
-    --muted-foreground: 40 15% 55%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 25 80% 50%;
-    --accent-foreground: 40 30% 96%;
+    --accent: 350 100% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 40 30% 96%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 30 15% 18%;
-    --input: 30 10% 15%;
-    --ring: 45 90% 55%;
+    --border: 0 0% 15%;
+    --input: 0 0% 10%;
+    --ring: 350 100% 60%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
 
-    /* Custom tokens - Gold theme */
-    --gradient-primary: linear-gradient(135deg, hsl(45, 90%, 55%) 0%, hsl(25, 80%, 50%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(35, 85%, 45%) 0%, hsl(45, 90%, 55%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(30, 10%, 8%) 0%, hsl(30, 10%, 4%) 100%);
-    --gradient-card: linear-gradient(135deg, hsla(30, 15%, 12%, 0.8) 0%, hsla(30, 10%, 6%, 0.8) 100%);
+    /* Custom tokens - Minimal dark theme */
+    --gradient-primary: linear-gradient(135deg, hsl(350, 100%, 60%) 0%, hsl(350, 100%, 45%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(350, 100%, 65%) 0%, hsl(350, 100%, 55%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 0%) 100%);
+    --gradient-card: linear-gradient(135deg, hsla(0, 0%, 6%, 0.9) 0%, hsla(0, 0%, 2%, 0.9) 100%);
     
-    --glow-primary: 0 0 60px hsla(45, 90%, 55%, 0.3);
-    --glow-secondary: 0 0 60px hsla(35, 85%, 45%, 0.3);
-    --glow-accent: 0 0 40px hsla(25, 80%, 50%, 0.25);
+    --glow-primary: 0 0 60px hsla(350, 100%, 60%, 0.3);
+    --glow-secondary: 0 0 60px hsla(350, 100%, 50%, 0.2);
+    --glow-accent: 0 0 40px hsla(350, 100%, 65%, 0.25);
     
-    --shadow-card: 0 8px 32px hsla(0, 0%, 0%, 0.4);
-    --shadow-elevated: 0 20px 60px hsla(0, 0%, 0%, 0.5);
+    --shadow-card: 0 8px 32px hsla(0, 0%, 0%, 0.6);
+    --shadow-elevated: 0 20px 60px hsla(0, 0%, 0%, 0.8);
 
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'Neue Haas Grotesk Display Pro', sans-serif;
+    --font-display: 'Neue Haas Grotesk Display Pro', 'Helvetica Neue', sans-serif;
+    --font-body: 'Neue Haas Grotesk Display Pro', 'Helvetica Neue', sans-serif;
 
-    --sidebar-background: 30 10% 6%;
-    --sidebar-foreground: 40 30% 96%;
-    --sidebar-primary: 45 90% 55%;
-    --sidebar-primary-foreground: 30 20% 8%;
-    --sidebar-accent: 30 10% 12%;
-    --sidebar-accent-foreground: 40 30% 96%;
-    --sidebar-border: 30 15% 18%;
-    --sidebar-ring: 45 90% 55%;
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 350 100% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 8%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 350 100% 60%;
   }
 }
 
