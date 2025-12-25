@@ -101,7 +101,7 @@ export const createLastFmApi = (apiKey: string) => {
     },
 
     getRecentTracks: async (username: string, limit: number = 50): Promise<RecentTrack[]> => {
-      const data = await fetchApi('user.getrecenttracks', { user: username, limit: limit.toString() });
+      const data = await fetchApi('user.getrecenttracks', { user: username, limit: limit.toString(), extended: '1' });
       return data.recenttracks?.track || [];
     },
 
@@ -113,6 +113,15 @@ export const createLastFmApi = (apiKey: string) => {
     getArtistTags: async (artist: string): Promise<LastFmTag[]> => {
       const data = await fetchApi('artist.gettoptags', { artist });
       return data.toptags?.tag?.slice(0, 5) || [];
+    },
+
+    getSimilarArtists: async (artist: string, limit: number = 10): Promise<{ name: string; match: number; image: string }[]> => {
+      const data = await fetchApi('artist.getsimilar', { artist, limit: limit.toString() });
+      return (data.similarartists?.artist || []).map((a: any) => ({
+        name: a.name,
+        match: parseFloat(a.match) * 100,
+        image: getImage(a.image, 'extralarge'),
+      }));
     },
 
     getWeeklyArtistChart: async (username: string): Promise<any[]> => {
