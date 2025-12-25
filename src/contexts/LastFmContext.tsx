@@ -70,12 +70,6 @@ export const LastFmProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   useEffect(() => {
     const fetchApiKey = async () => {
       try {
-        const { data: response, error } = await supabase.functions.invoke('lastfm-auth', {
-          body: {},
-          headers: { 'Content-Type': 'application/json' },
-        });
-        
-        // Use query param for action
         const result = await fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/lastfm-auth?action=get-api-key`,
           {
