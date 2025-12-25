@@ -2,12 +2,12 @@ import { motion } from 'framer-motion';
 import { useLastFm } from '@/contexts/LastFmContext';
 
 const periods = [
-  { value: '7day', label: '7 Days' },
-  { value: '1month', label: '1 Month' },
-  { value: '3month', label: '3 Months' },
-  { value: '6month', label: '6 Months' },
-  { value: '12month', label: '12 Months' },
-  { value: 'overall', label: 'All Time' },
+  { value: '7day', label: '7D' },
+  { value: '1month', label: '1M' },
+  { value: '3month', label: '3M' },
+  { value: '6month', label: '6M' },
+  { value: '12month', label: '1Y' },
+  { value: 'overall', label: 'All' },
 ];
 
 export const PeriodFilter = () => {
@@ -15,20 +15,20 @@ export const PeriodFilter = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="flex flex-wrap justify-center gap-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="flex items-center gap-1 mb-8"
     >
+      <span className="text-xs text-muted-foreground font-light mr-3">Period</span>
       {periods.map((p) => (
         <button
           key={p.value}
           onClick={() => setPeriod(p.value)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+          className={`px-3 py-1.5 text-xs font-light transition-all duration-300 border ${
             period === p.value
-              ? 'bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-lg'
-              : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
+              ? 'border-primary text-primary'
+              : 'border-transparent text-muted-foreground hover:text-foreground'
           }`}
-          style={period === p.value ? { boxShadow: '0 0 20px hsla(45, 90%, 55%, 0.3)' } : {}}
         >
           {p.label}
         </button>

@@ -12,43 +12,36 @@ const IndexContent = () => {
   if (isLoading && !user) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-primary animate-spin" />
+        <div className="flex gap-2">
+          {[0, 1, 2, 3].map((i) => (
+            <motion.div
+              key={i}
+              className="w-2 h-2 rounded-full bg-primary"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.15 }}
+            />
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background effects */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl" />
-      </div>
-
-      {/* Noise overlay */}
-      <div className="noise-overlay" />
-
+    <div className="min-h-screen bg-background relative">
       {/* Main content */}
       <main className="relative z-10 container mx-auto px-4 pb-16">
-        <Header />
+        {isAuthenticated && <Header />}
         
         {isAuthenticated ? (
           <Dashboard />
         ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex items-center justify-center py-12"
-          >
-            <LoginScreen />
-          </motion.div>
+          <LoginScreen />
         )}
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 text-center py-8 border-t border-border/50">
-        <p className="text-sm text-muted-foreground">
+      <footer className="relative z-10 text-center py-8 border-t border-border/30">
+        <p className="text-xs text-muted-foreground font-light tracking-wide">
           © 2025 Jackpot Music Entertainment / XZ1 Recording Ventures
         </p>
       </footer>

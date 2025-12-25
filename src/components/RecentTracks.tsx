@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { Clock, Disc3, ExternalLink } from 'lucide-react';
 import { useLastFm } from '@/contexts/LastFmContext';
 import { getImage } from '@/lib/lastfm';
 
@@ -15,27 +14,23 @@ export const RecentTracks = () => {
     const diff = now.getTime() - date.getTime();
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return 'Just now';
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    return `${days}d ago`;
+    if (minutes < 1) return 'now';
+    if (minutes < 60) return `${minutes}m`;
+    if (hours < 24) return `${hours}h`;
+    return `${Math.floor(diff / 86400000)}d`;
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.5 }}
-      className="glass-card p-6 md:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+      className="border border-border/30 p-6"
     >
-      <div className="flex items-center gap-2 mb-6">
-        <Clock className="w-5 h-5 text-secondary" />
-        <h2 className="font-display text-2xl font-bold text-foreground">Recent Scrobbles</h2>
-      </div>
+      <h2 className="font-display text-lg font-medium text-foreground mb-6">Recent</h2>
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         {tracks.map((track, index) => {
           const image = getImage(track.image, 'small');
           const isNowPlaying = track['@attr']?.nowplaying === 'true';
@@ -46,48 +41,40 @@ export const RecentTracks = () => {
               href={track.url}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.05 * index }}
-              className="group flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.03 * index }}
+              className="flex items-center gap-3 group"
             >
-              <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+              <div className="w-8 h-8 rounded overflow-hidden bg-muted flex-shrink-0 relative">
                 {image ? (
                   <img src={image} alt={track.name} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                    <Disc3 className="w-4 h-4 text-muted-foreground" />
-                  </div>
+                  <div className="w-full h-full bg-muted" />
                 )}
                 {isNowPlaying && (
-                  <div className="absolute inset-0 bg-primary/30 flex items-center justify-center">
-                    <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                  <div className="absolute inset-0 bg-primary/40 flex items-center justify-center">
+                    <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
                   </div>
                 )}
               </div>
 
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
+                <p className="text-sm text-foreground truncate group-hover:text-primary transition-colors font-light">
                   {track.name}
                 </p>
-                <p className="text-xs text-muted-foreground truncate">
-                  {track.artist['#text']} • {track.album['#text']}
+                <p className="text-xs text-muted-foreground truncate font-light">
+                  {track.artist['#text']}
                 </p>
               </div>
 
-              <div className="flex items-center gap-2">
+              <span className="text-xs text-muted-foreground font-light">
                 {isNowPlaying ? (
-                  <span className="text-xs text-primary font-medium flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                    Now
-                  </span>
+                  <span className="text-primary">●</span>
                 ) : track.date ? (
-                  <span className="text-xs text-muted-foreground whitespace-nowrap">
-                    {formatTime(track.date.uts)}
-                  </span>
+                  formatTime(track.date.uts)
                 ) : null}
-                <ExternalLink className="w-3 h-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
+              </span>
             </motion.a>
           );
         })}

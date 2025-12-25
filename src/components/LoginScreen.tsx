@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Music, ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLastFm } from '@/contexts/LastFmContext';
 
@@ -7,26 +7,36 @@ export const LoginScreen = () => {
   const { login, isLoading, error } = useLastFm();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="w-full max-w-md mx-auto"
-    >
-      <div className="glass-card p-8 space-y-6">
-        <div className="text-center space-y-4">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg"
-            style={{ boxShadow: '0 0 40px hsla(45, 90%, 55%, 0.4)' }}
-          >
-            <Music className="w-10 h-10 text-primary-foreground" />
-          </motion.div>
-          <h2 className="font-display text-2xl font-bold text-foreground">Connect to Last.fm</h2>
-          <p className="text-muted-foreground text-sm">
-            Authorize with your Last.fm account to see your personalized music breakdown
+    <div className="min-h-screen flex flex-col items-center justify-center px-6">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="text-center space-y-12 max-w-2xl"
+      >
+        {/* Minimal dot loader like jackpotmusik */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="flex justify-center gap-2"
+        >
+          {[0, 1, 2, 3].map((i) => (
+            <motion.div
+              key={i}
+              className="w-2 h-2 rounded-full bg-primary"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.15 }}
+            />
+          ))}
+        </motion.div>
+
+        <div className="space-y-6">
+          <h1 className="font-display text-4xl md:text-5xl font-medium tracking-tight text-foreground">
+            Last.fm Breakdown
+          </h1>
+          <p className="text-muted-foreground text-lg font-light max-w-md mx-auto">
+            Connect your Last.fm account to visualize your listening patterns
           </p>
         </div>
 
@@ -34,37 +44,38 @@ export const LoginScreen = () => {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-destructive text-sm text-center bg-destructive/10 p-3 rounded-lg"
+            className="text-primary text-sm"
           >
             {error}
           </motion.p>
         )}
 
-        <Button
-          onClick={login}
-          disabled={isLoading}
-          variant="gradient"
-          size="xl"
-          className="w-full"
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
         >
-          {isLoading ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              Connecting...
-            </>
-          ) : (
-            <>
-              <Music className="w-5 h-5" />
-              Login with Last.fm
-              <ArrowRight className="w-5 h-5" />
-            </>
-          )}
-        </Button>
-
-        <p className="text-xs text-muted-foreground text-center">
-          You'll be redirected to Last.fm to authorize access to your listening data
-        </p>
-      </div>
-    </motion.div>
+          <Button
+            onClick={login}
+            disabled={isLoading}
+            variant="outline"
+            size="lg"
+            className="border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 font-light tracking-wide"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                Connecting...
+              </>
+            ) : (
+              <>
+                Login with Last.fm
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </>
+            )}
+          </Button>
+        </motion.div>
+      </motion.div>
+    </div>
   );
 };
