@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
-import { Calendar, Headphones, MapPin, ExternalLink } from 'lucide-react';
+import { Calendar, Headphones, MapPin, ExternalLink, LogOut } from 'lucide-react';
 import { useLastFm } from '@/contexts/LastFmContext';
 import { getImage } from '@/lib/lastfm';
+import { Button } from '@/components/ui/button';
 
 export const UserProfile = () => {
-  const { data, disconnect } = useLastFm();
+  const { data, logout, profile } = useLastFm();
   const { user } = data;
 
   if (!user) return null;
@@ -17,7 +18,7 @@ export const UserProfile = () => {
   });
 
   const playcount = parseInt(user.playcount).toLocaleString();
-  const avatar = getImage(user.image, 'extralarge');
+  const avatar = getImage(user.image, 'extralarge') || profile?.avatar_url;
 
   return (
     <motion.div
@@ -33,7 +34,8 @@ export const UserProfile = () => {
           transition={{ delay: 0.2 }}
           className="relative"
         >
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg shadow-primary/20">
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden border-2 border-primary/30 shadow-lg"
+               style={{ boxShadow: '0 0 30px hsla(45, 90%, 55%, 0.2)' }}>
             {avatar ? (
               <img src={avatar} alt={user.name} className="w-full h-full object-cover" />
             ) : (
@@ -81,12 +83,15 @@ export const UserProfile = () => {
             >
               View on Last.fm <ExternalLink className="w-3 h-3" />
             </a>
-            <button
-              onClick={disconnect}
-              className="text-sm text-muted-foreground hover:text-destructive transition-colors"
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={logout}
+              className="text-muted-foreground hover:text-destructive"
             >
-              Disconnect
-            </button>
+              <LogOut className="w-4 h-4 mr-1" />
+              Logout
+            </Button>
           </div>
         </div>
 

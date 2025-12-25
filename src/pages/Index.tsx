@@ -1,11 +1,21 @@
 import { motion } from 'framer-motion';
 import { LastFmProvider, useLastFm } from '@/contexts/LastFmContext';
 import { Header } from '@/components/Header';
-import { ConnectForm } from '@/components/ConnectForm';
+import { LoginScreen } from '@/components/LoginScreen';
 import { Dashboard } from '@/components/Dashboard';
+import { Loader2 } from 'lucide-react';
 
 const IndexContent = () => {
-  const { isConnected, isLoading } = useLastFm();
+  const { isAuthenticated, isLoading, user } = useLastFm();
+
+  // Show loader while checking auth state
+  if (isLoading && !user) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-primary animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -23,7 +33,7 @@ const IndexContent = () => {
       <main className="relative z-10 container mx-auto px-4 pb-16">
         <Header />
         
-        {isConnected ? (
+        {isAuthenticated ? (
           <Dashboard />
         ) : (
           <motion.div
@@ -31,23 +41,15 @@ const IndexContent = () => {
             animate={{ opacity: 1 }}
             className="flex items-center justify-center py-12"
           >
-            <ConnectForm />
+            <LoginScreen />
           </motion.div>
         )}
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 text-center py-8 text-sm text-muted-foreground">
-        <p>
-          Powered by{' '}
-          <a
-            href="https://www.last.fm/api"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            Last.fm API
-          </a>
+      <footer className="relative z-10 text-center py-8 border-t border-border/50">
+        <p className="text-sm text-muted-foreground">
+          © 2025 Jackpot Music Entertainment / XZ1 Recording Ventures
         </p>
       </footer>
     </div>
